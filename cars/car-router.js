@@ -25,4 +25,29 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    await db('cars')
+      .where({ id })
+      .del();
+    res.status(201).json({ message: 'Item Deleted.' });
+  } catch (error) {
+    res.status(500).json({ message: `Failed to delete data.` });
+  }
+});
+
+router.put('/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const changes = req.body;
+    await db('cars')
+      .where({ id })
+      .update(changes);
+    res.status(201).json({ message: 'Item updated.' });
+  } catch (error) {
+    res.status(500).json({ message: `Failed to update data.` });
+  }
+});
+
 module.exports = router;
