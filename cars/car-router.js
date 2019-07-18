@@ -13,6 +13,16 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const cars = await db('cars').where({ id });
+    res.json(cars);
+  } catch (error) {
+    res.status(500).json({ message: `Failed to retrieve cars.` });
+  }
+});
+
 router.post('/', async (req, res) => {
   try {
     const carData = req.body;
